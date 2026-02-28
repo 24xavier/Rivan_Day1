@@ -1,0 +1,30 @@
+conf t
+ ip http server
+ ip http secure-server
+ ip http authentication local
+ username admin priv 15 secret pass
+ restconf
+ end
+ 
+ https://10.69.255.13:8443
+ 
+ 
+ [22-Jan-2026 12:12:45 UTC] Configuring device with feature template: VE-TEMP
+[22-Jan-2026 12:12:47 UTC] Checking and creating device in vManage
+[22-Jan-2026 12:12:48 UTC] Generating configuration from template
+[22-Jan-2026 12:12:50 UTC] Device is online
+[22-Jan-2026 12:12:50 UTC] Updating device configuration in vManage
+[22-Jan-2026 12:12:51 UTC] Sending configuration to device
+[22-Jan-2026 12:12:55 UTC] Device failed to process request.  Error Message - /vpn/vpn-instance: Cannot delete eth0 interface from management vpn (512)
+ Error Path - 
+    /rpc/edit-config/config/viptela-vpn:vpn/viptela-vpn:vpn-instance
+  
+An element value is not correct : vpn-instance.
+
+
+[22-Jan-2026 12:12:44 UTC] Configuring device with feature template: VE-TEMP
+[22-Jan-2026 12:12:47 UTC] Checking and creating device in vManage
+[22-Jan-2026 12:12:48 UTC] Generating configuration from template
+[22-Jan-2026 12:12:50 UTC] Device is online
+[22-Jan-2026 12:12:50 UTC] Updating device configuration in vManage
+[22-Jan-2026 12:12:51 UTC] Sending configuration to device

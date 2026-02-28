@@ -1,0 +1,82 @@
+config t
+no access-list 51
+no access-list 54
+
+access-list 51 permit host 51.51.51.51
+access-list 54 permit host 54.54.54.54 
+
+route-map ISP2for54 permit 10			
+ match ip address 54
+ set weight 54					
+route-map ISP2for54 permit 20
+!
+route-map ISP1for51 permit 10
+ match ip address 51
+ set weight 51
+route-map ISP1for51 permit 20
+!
+router bgp 1
+ neighbor 207.7.7.2 route-map ISP2for54 in
+ neighbor 209.9.9.3 route-map ISP1for51 in
+end
+clear ip bgp * soft
+
+
+config t
+access-list 41 permit host 41.41.41.41
+access-list 42 permit host 42.42.42.42
+access-list 43 permit host 43.43.43.43
+access-list 45 permit host 45.45.45.45
+route-map LP1 permit 10
+ match ip address 41
+  set local-pref 411
+route-map LP1 permit 20
+ match ip address 42
+  set local-pref 422
+  route-map LP1 permit 30
+ match ip address 43
+  set local-pref 433
+route-map LP1 Deny 30
+ match ip address 45
+
+		router bgp 45
+			neighbor 45.4.5.5 route-map LP1 out
+			do clear ip bgp *
+end
+
+
+config t
+route-map ASPATH permit 10
+set as-path prepend 45 45 45
+exit
+router bgp 45
+neighbor 208.8.8.1 route-map ASPATH OUT
+do clear ip bgp * soft
+end
+
+config t
+		route-map ASPATH3 permit 10
+			set as-path prepend 3 3 3 3 3
+			exit
+		router bgp 3
+			neighbor 209.9.9.1 route-map ASPATH3 OUT
+			do clear ip bgp * soft
+			end
+			
+			
+			route-map ASPATH2 permit 10
+			set as-path prepend  2 2 2 2 2 2 2
+			exit
+		router bgp 2
+			neighbor 207.7.7.1 route-map ASPATH2 OUT
+			do clear ip bgp * soft
+			end
+			
+			
+			ip vrf clientUnionbank
+  rd 1233:5
+  route-target 99999:5
+  exit
+  
+  int l 88
+  ip add 88.88.88.88 255.255.255.255
